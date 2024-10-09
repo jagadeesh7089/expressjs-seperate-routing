@@ -16,26 +16,68 @@ var cookiParser=require('cookie-parser')
 
 var session=require('express-session')
 
+var order=require('./order.route')
+// console.log(order)
+
+var product=require('./product.route')
+console.log(product)
+
 app.use(cookiParser())
 app.use(session({
     secret:'ado okati'
 }))
 
-//  app.get('/login',function(req,res){
+ app.get('/login',function(req,res){
+    // console.log(req.session)
 
-//  }) 
+    var x=users.some((user)=>{
+        if(user.username===req.query.username && user.password===req.query.password){
+            return true
+        }
+        else{
+            res.sendFile(__dirname+'/Errorlogin.html')
+        }
+    })
+
+    if(x){
+        console.log("hiii")    
+        req.session.username=req.query.username;
+        req.session.password=req.query.password;
+        console.log(req.session)
+        res.redirect('/')
+    }
+    
+
+ }) 
 
 function checklog(req,res,next){
+    // console.log(req.session.username)
     if(req.session.username){
         next()
     }
     else{
-        res.redirect('/login.html')
-    }
+        res.sendFile(__dirname+"/login.html")
+        
+    }  
+   
 }
+
+
+app.use(checklog)
+app.use('/orders',order)
+app.use('/products',product)
+
 
 app.get('/',function(req,res){
     res.send("Hii this req is from root route")
+   
+})
+app.get('/abc',function(req,res){
+    res.send('this is from abc route')
+})
+
+app.get('/xyz',function(req,res){
+    res.send("This req is from xyz route")
 })
 
 
