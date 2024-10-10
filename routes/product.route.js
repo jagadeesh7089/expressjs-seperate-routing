@@ -1,6 +1,7 @@
 var express=require('express')
 var router=express.Router()
-var mongoose=require('mongoose')
+
+var Product=require('../models/product.model')
 
 
 router.get('/',function(req,res){
@@ -8,8 +9,11 @@ router.get('/',function(req,res){
 })
 
 router.get('/allproducts',function(req,res){
-    mongoose.connect('')
     // res.send("This is from all products route")
+    Product.find({}).then((data)=>{
+      res.send(data)
+      console.log(data)
+    })
 })
 
 router.get('/conformproducts',function(req,res){

@@ -1,6 +1,6 @@
 var express=require('express')
 var app=express();
-
+var  mongoose=require('mongoose')
 var users=[
     {
       username:"nani",
@@ -12,14 +12,19 @@ var users=[
     }
 ]
 
+mongoose.connect(process.env['MONGO_URL']) 
+
+//nodemon --env-file=.env server.js
+
+console.log("Environment is::",process.env['MONGO_URL'])
 var cookiParser=require('cookie-parser')
 
 var session=require('express-session')
 
-var order=require('./order.route')
+var order=require('./routes/order.route')
 // console.log(order)
 
-var product=require('./product.route')
+var product=require('./routes/product.route')
 // console.log(product)
 
 app.use(cookiParser())
@@ -61,17 +66,17 @@ function checklog(req,res,next){
     }  
    
 }
+  app.use(checklog)
 
 
-app.use(checklog)
-app.use('/orders',order)
-app.use('/products',product)
+  app.use('/orders',order)
+  app.use('/products',product)
 
 
-app.get('/',function(req,res){
+   app.get('/',function(req,res){
     res.send("Hii this req is from root route")
    
-})
+ })
 app.get('/abc',function(req,res){
     res.send('this is from abc route')
 })
@@ -81,6 +86,10 @@ app.get('/xyz',function(req,res){
 })
 
 
-app.listen(4300,()=>{
+app.get("**",function(req,res){
+    res.send("Cannot Lood this page 404 Error")
+})
+
+app.listen(process.env.PORT,()=>{
     console.log("Server running on 4300 port...!")
 })
