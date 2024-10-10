@@ -20,7 +20,7 @@ var order=require('./order.route')
 // console.log(order)
 
 var product=require('./product.route')
-console.log(product)
+// console.log(product)
 
 app.use(cookiParser())
 app.use(session({
