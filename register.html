@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="userform" onsubmit="register(event)" >
+        <input type="text" name="username" id="" placeholder="username" ><br><br>
+        <input type="text" name="password" id="" placeholder="password"><br><br>
+        <button>Signup</button>
+    </form>
+
+    <script>
+        function register(e){
+            e.preventDefault()
+            var user={
+                username:userform.username.value,
+                password:userform.password.value
+            }
+            fetch('http://localhost:4000/user/register',{
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json'
+                },
+                body:JSON.stringify(user)
+            }).then(res=>res.json())
+            .then(data=>{
+                if(data.message==="succesed"){
+                    alert("Register success")
+                    window.location.href='/login.html'
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>

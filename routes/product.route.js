@@ -8,6 +8,7 @@ router.get('/',function(req,res){
    res.send("This is root route of products")
 })
 
+
 router.get('/allproducts',function(req,res){
     // res.send("This is from all products route")
     Product.find({}).then((data)=>{

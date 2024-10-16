@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        fetch('http://localhost:4000/product/allproducts',{
+            method:'GET',
+            headers:{
+                'Authorization':window.localStorage.getItem("token")
+            }
+        }).then((res)=>res.json()).then((data)=>{
+            data.map((product)=>{
+                var nli=document.createElement("li")
+                nli.innerHTML=product.title
+                document.getElementById("root").appendChild(nli)
+            })
+        })
+    </script>
+</body>
+</html>
