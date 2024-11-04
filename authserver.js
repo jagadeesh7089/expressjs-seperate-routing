@@ -19,12 +19,11 @@ app.use('/user',UserRouter)
 
 function auth(req,res,next){
     var x=jwt.verify(req.headers.authorization,"this is secret key")
-  console.log()
+  
     next()
 }
 
 app.use('/product',auth,ProductRouter)
-
 
 
 app.listen(4000,()=>{console.log("Server running on 4000 port enjoy ...!")})
